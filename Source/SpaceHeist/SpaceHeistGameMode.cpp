@@ -3,6 +3,8 @@
 #include "SpaceHeistGameMode.h"
 #include "SpaceHeistCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "MenuHUD.h"
+#include "MenuPlayerController.h"
 
 ASpaceHeistGameMode::ASpaceHeistGameMode()
 {
@@ -12,4 +14,7 @@ ASpaceHeistGameMode::ASpaceHeistGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+
+	PlayerControllerClass = AMenuPlayerController::StaticClass();
+	HUDClass = AMenuHUD::StaticClass();
 }
