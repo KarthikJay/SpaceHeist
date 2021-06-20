@@ -8,11 +8,11 @@
 /**
  * 
  */
-class SMainMenuWidget : public SCompoundWidget
+class SServerMenuWidget : public SCompoundWidget
 {
 public:
 
-SLATE_BEGIN_ARGS(SMainMenuWidget) {}
+SLATE_BEGIN_ARGS(SServerMenuWidget) {}
 
 SLATE_ARGUMENT(TWeakObjectPtr<class AMenuHUD>, OwningHUD)
 
@@ -21,9 +21,9 @@ SLATE_END_ARGS()
 /** every widget needs a construction function */
 void Construct(const FArguments& InArgs);
 
-FReply OnPlayClicked() const;
-FReply OnServersClicked() const;
-FReply OnQuitClicked() const;
+FReply OnServer_1Clicked() const;
+FReply OnServer_2Clicked() const;
+FReply OnBackClicked() const;
 
 /**The HUD that created this widget*/
 TWeakObjectPtr<class AMenuHUD> OwningHUD;

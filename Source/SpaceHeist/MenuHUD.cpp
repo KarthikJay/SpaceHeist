@@ -3,9 +3,11 @@
 
 #include "MenuHUD.h"
 #include "SMainMenuWidget.h"
+#include "SServerMenuWidget.h"
 #include "Widgets/SWeakWidget.h"
 #include "Engine/Engine.h"
 #include "GameFramework/PlayerController.h"
+#include <string>
 
 void AMenuHUD::BeginPlay()
 {
@@ -38,6 +40,21 @@ void AMenuHUD::RemoveMenu()
         {
             PlayerOwner->bShowMouseCursor = false;
             PlayerOwner->SetInputMode(FInputModeGameOnly());
+        }
+    }
+}
+
+void AMenuHUD::ShowServerMenu()
+{
+    if (GEngine && GEngine->GameViewport)
+    {
+        ServerMenuWidget = SNew(SServerMenuWidget).OwningHUD(this);
+        GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(ServerMenuWidgetContainer, SWeakWidget).PossiblyNullContent(ServerMenuWidget.ToSharedRef()));
+
+        if(PlayerOwner)
+        {
+            PlayerOwner->bShowMouseCursor = true;
+            PlayerOwner->SetInputMode(FInputModeUIOnly());
         }
     }
 }

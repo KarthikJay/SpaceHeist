@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SMainMenuWidget.h"
+#include "SServerMenuWidget.h"
 #include "MenuHUD.h"
 #include "GameFramework/PlayerController.h"
 
-#define LOCTEXT_NAMESPACE "MainMenu"
+#define LOCTEXT_NAMESPACE "ServerMenu"
 
-void SMainMenuWidget::Construct(const FArguments& InArgs)
+void SServerMenuWidget::Construct(const FArguments& InArgs)
 {
     bCanSupportFocus = true;
     
@@ -16,10 +16,10 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
     const FMargin ButtonPadding = FMargin(10.f); //provides margins buttons such that buttons don't touch each other
 
     const FText TitleText = LOCTEXT("GameTitle", "Space Heist");
-    const FText PlayText = LOCTEXT("PlayGame", "Play");
-    const FText SettingsText = LOCTEXT("Settings", "Settings");
     const FText ServersText = LOCTEXT("Servers", "Servers");
-    const FText QuitText = LOCTEXT("QuitGame", "Quit Game");
+    const FText Server1Text = LOCTEXT("Server 1", "Server 1");
+    const FText Server2Text = LOCTEXT("Server 2", "Server 2");
+    const FText BackText = LOCTEXT("Back", "Back");
 
     FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
     ButtonTextStyle.Size = 40.f;
@@ -54,57 +54,54 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 
                 ]
 
-                //Play Button
+                //Servers Text
+                + SVerticalBox::Slot()
+                [
+                    SNew(STextBlock)
+                    .Font(TitleTextStyle)
+                    .Text(ServersText)
+                    .Justification(ETextJustify::Center)
+
+                ]
+
+                //Server 1 Button
                 + SVerticalBox::Slot()
                 .Padding(ButtonPadding)
                 [
                     SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnPlayClicked)
+                    //.OnClicked(this, &SServerMenuWidget::OnServer1Clicked)
                     [
                         SNew(STextBlock)
                         .Font(ButtonTextStyle)
-                        .Text(PlayText)
+                        .Text(Server1Text)
+                        .Justification(ETextJustify::Center)
+                    ]                   
+                ]
+
+                //Server 2 Button
+                + SVerticalBox::Slot()
+                .Padding(ButtonPadding)
+                [
+                    SNew(SButton)
+                    //.OnClicked(this, &SServerMenuWidget::OnServer2Clicked)
+                    [
+                        SNew(STextBlock)
+                        .Font(ButtonTextStyle)
+                        .Text(Server2Text)
                         .Justification(ETextJustify::Center)
                     ]                   
                 ]    
 
-                //Settings Button
+                //Back Button
                 + SVerticalBox::Slot()
                 .Padding(ButtonPadding)
                 [
                     SNew(SButton)
+                    //.OnClicked(this, &SMainMenuWidget::OnBackClicked)
                     [
                         SNew(STextBlock)
                         .Font(ButtonTextStyle)
-                        .Text(SettingsText)
-                        .Justification(ETextJustify::Center)
-                    ]                   
-                ]
-
-                //Servers Button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnServersClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(ServersText)
-                        .Justification(ETextJustify::Center)
-                    ]                   
-                ]
-
-                //Quit Button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnQuitClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(QuitText)
+                        .Text(BackText)
                         .Justification(ETextJustify::Center)
                     ]                   
                 ]
@@ -112,44 +109,3 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
             ]
         ];
 }
-
-FReply SMainMenuWidget::OnPlayClicked() const 
-{
-    UE_LOG(LogTemp,Warning, TEXT("Play Button Clicked"));
-    if (OwningHUD.IsValid())
-    {
-        OwningHUD->RemoveMenu();
-    }
-    
-    return FReply::Handled();
-}
-
-FReply SMainMenuWidget::OnQuitClicked() const 
-{
-    UE_LOG(LogTemp,Warning, TEXT("Quit Button Clicked"));
-    if(OwningHUD.IsValid())
-    {
-        if(APlayerController* PC = OwningHUD->PlayerOwner)
-        {
-            PC->ConsoleCommand("quit");
-        }
-    }
-
-    return FReply::Handled();
-}
-
-FReply SMainMenuWidget::OnServersClicked() const 
-{
-    UE_LOG(LogTemp,Warning, TEXT("Servers Button Clicked"));
-    if (OwningHUD.IsValid())
-    {
-        OwningHUD->RemoveMenu();
-        OwningHUD->ShowServerMenu();
-    }
-    
-    return FReply::Handled();
-}
-
-#undef LOCTEXT_NAMESPACE
-
-

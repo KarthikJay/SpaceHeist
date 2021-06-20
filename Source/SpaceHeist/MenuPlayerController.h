@@ -21,4 +21,5 @@ protected:
 	virtual void SetupInputComponent() override;
 
 	void OpenMenu();
+	void OpenServerMenu();
 };

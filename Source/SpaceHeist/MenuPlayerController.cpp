@@ -26,3 +26,11 @@ void AMenuPlayerController::OpenMenu()
         MenuHUD->ShowMenu();
     }
 }
+
+void AMenuPlayerController::OpenServerMenu()
+{
+    if (AMenuHUD* MenuHUD = Cast<AMenuHUD>(GetHUD()))
+    {
+        MenuHUD->ShowServerMenu();
+    }
+}
