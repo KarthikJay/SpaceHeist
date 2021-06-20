@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSubsystem.h"
 #include "GameFramework/GameModeBase.h"
 #include "SpaceHeistGameMode.generated.h"
 
@@ -13,6 +14,18 @@ class ASpaceHeistGameMode : public AGameModeBase
 
 public:
 	ASpaceHeistGameMode();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+	void OnCreateSessionComplete(FName ServerName, bool Success);
+
+protected:
+	IOnlineSessionPtr ActiveSession;
+
+	UFUNCTION(BlueprintCallable)
+		void CreateServer();
+
+	UFUNCTION(BlueprintCallable)
+		void JoinServer();
 };
 
 
