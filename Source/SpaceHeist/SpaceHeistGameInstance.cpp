@@ -7,7 +7,7 @@ USpaceHeistGameInstance::USpaceHeistGameInstance(const FObjectInitializer& Objec
 	IOnlineSessionPtr Sessions = IOnlineSubsystem::Get()->GetSessionInterface();
 	/** Bind function for creating a Session */
 	OnCreateSessionCompleteDelegate = FOnCreateSessionCompleteDelegate::CreateUObject(this, &USpaceHeistGameInstance::OnCreateSessionComplete);
-	OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
+	//OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
 	OnStartSessionCompleteDelegate = FOnStartSessionCompleteDelegate::CreateUObject(this, &USpaceHeistGameInstance::OnStartOnlineGameComplete);
 
 }
@@ -16,33 +16,41 @@ bool USpaceHeistGameInstance::HostSession(TSharedPtr<const FUniqueNetId> UserId,
 {
 	// Get the SessionInterface to work with
 	IOnlineSessionPtr Sessions = IOnlineSubsystem::Get()->GetSessionInterface();
-	FOnlineSessionSettings SessionSettings;
-
-	// TODO: Check errors for SessionInterface!
-	// SessionSettings = MakeShareable<FOnlineSessionSettings>(new FOnlineSessionSettings());
-	SessionSettings.bUsesPresence = bIsPresence;
-	SessionSettings.NumPublicConnections = MaxNumPlayers;
-	SessionSettings.bAllowInvites = true;
-	SessionSettings.bShouldAdvertise = true;
-	SessionSettings.bAllowJoinViaPresence = true;
-
-	SessionSettings.Set(SETTING_MAPNAME, FString("NewMap"), EOnlineDataAdvertisementType::ViaOnlineService);
-
-
-	// TODO: FIX THIS! Causes CTD with access violation error thrown!
-	if (!OnCreateSessionCompleteDelegateHandle.IsValid())
-		OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
-	else
+	if (Sessions.IsValid())
 	{
-		OnCreateSessionCompleteDelegateHandle.Reset();
-		UE_LOG(LogTemp, Warning, TEXT("Got Here!"));
+		FOnlineSessionSettings SessionSettings;
+
+		// TODO: Check errors for SessionInterface!
+		// SessionSettings = MakeShareable<FOnlineSessionSettings>(new FOnlineSessionSettings());
+		SessionSettings.bUsesPresence = bIsPresence;
+		SessionSettings.NumPublicConnections = MaxNumPlayers;
+		SessionSettings.bAllowInvites = true;
+		SessionSettings.bShouldAdvertise = true;
+		SessionSettings.bAllowJoinViaPresence = true;
+
+		SessionSettings.Set(SETTING_MAPNAME, FString("NewMap"), EOnlineDataAdvertisementType::ViaOnlineService);
+
+		/*
+		// TODO: FIX THIS! Causes CTD with access violation error thrown!
+		if (!OnCreateSessionCompleteDelegateHandle.IsValid())
+			OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
+		else
+		{
+			OnCreateSessionCompleteDelegateHandle.Reset();
+			UE_LOG(LogTemp, Warning, TEXT("Got Here!"));
+			OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
+			UE_LOG(LogTemp, Warning, TEXT("Got Here 2!"));
+		}
+		*/
+
+
 		OnCreateSessionCompleteDelegateHandle = Sessions->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
-		UE_LOG(LogTemp, Warning, TEXT("Got Here 2!"));
+
+		// Our delegate should get called when this is complete (doesn't need to be successful!)
+		return Sessions->CreateSession(*UserId, SessionName, SessionSettings);
 	}
-
-
-	// Our delegate should get called when this is complete (doesn't need to be successful!)
-	return Sessions->CreateSession(*UserId, SessionName, SessionSettings);
+	else
+		return false;
 }
 
 void USpaceHeistGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
