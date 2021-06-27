@@ -28,5 +28,6 @@ public:
 	void ShowMenu();
 	void RemoveMenu();
 	void ShowServerMenu();
+	void RemoveServerMenu();
 	
 };

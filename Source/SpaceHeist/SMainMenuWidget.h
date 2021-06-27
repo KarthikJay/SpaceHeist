@@ -21,8 +21,8 @@ SLATE_END_ARGS()
 /** every widget needs a construction function */
 void Construct(const FArguments& InArgs);
 
-FReply OnPlayClicked() const;
-FReply OnServersClicked() const;
+FReply OnCreateSessionClicked() const;
+FReply OnFindSessionsClicked() const;
 FReply OnQuitClicked() const;
 
 /**The HUD that created this widget*/

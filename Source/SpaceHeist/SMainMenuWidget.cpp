@@ -16,9 +16,9 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
     const FMargin ButtonPadding = FMargin(10.f); //provides margins buttons such that buttons don't touch each other
 
     const FText TitleText = LOCTEXT("GameTitle", "Space Heist");
-    const FText PlayText = LOCTEXT("PlayGame", "Play");
+    const FText CreateSessionText = LOCTEXT("Create Session", "Create Session");
     const FText SettingsText = LOCTEXT("Settings", "Settings");
-    const FText ServersText = LOCTEXT("Servers", "Servers");
+    const FText FindSessionsText = LOCTEXT("Find Sessions", "Find Sessions");
     const FText QuitText = LOCTEXT("QuitGame", "Quit Game");
 
     FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
@@ -54,19 +54,33 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 
                 ]
 
-                //Play Button
+                //Create Session Button
                 + SVerticalBox::Slot()
                 .Padding(ButtonPadding)
                 [
                     SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnPlayClicked)
+                    .OnClicked(this, &SMainMenuWidget::OnCreateSessionClicked)
                     [
                         SNew(STextBlock)
                         .Font(ButtonTextStyle)
-                        .Text(PlayText)
+                        .Text(CreateSessionText)
                         .Justification(ETextJustify::Center)
                     ]                   
                 ]    
+
+                //Find Sessions Button
+                + SVerticalBox::Slot()
+                .Padding(ButtonPadding)
+                [
+                    SNew(SButton)
+                    .OnClicked(this, &SMainMenuWidget::OnFindSessionsClicked)
+                    [
+                        SNew(STextBlock)
+                        .Font(ButtonTextStyle)
+                        .Text(FindSessionsText)
+                        .Justification(ETextJustify::Center)
+                    ]                   
+                ]
 
                 //Settings Button
                 + SVerticalBox::Slot()
@@ -77,20 +91,6 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
                         SNew(STextBlock)
                         .Font(ButtonTextStyle)
                         .Text(SettingsText)
-                        .Justification(ETextJustify::Center)
-                    ]                   
-                ]
-
-                //Servers Button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnServersClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(ServersText)
                         .Justification(ETextJustify::Center)
                     ]                   
                 ]
@@ -113,12 +113,12 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
         ];
 }
 
-FReply SMainMenuWidget::OnPlayClicked() const 
+FReply SMainMenuWidget::OnCreateSessionClicked() const 
 {
-    UE_LOG(LogTemp,Warning, TEXT("Play Button Clicked"));
+    UE_LOG(LogTemp,Warning, TEXT("Create Session Button Clicked"));
     if (OwningHUD.IsValid())
     {
-        OwningHUD->RemoveMenu();
+        OwningHUD->RemoveMenu(); //this to be replaced with Tang's networking code
     }
     
     return FReply::Handled();
@@ -138,9 +138,9 @@ FReply SMainMenuWidget::OnQuitClicked() const
     return FReply::Handled();
 }
 
-FReply SMainMenuWidget::OnServersClicked() const 
+FReply SMainMenuWidget::OnFindSessionsClicked() const 
 {
-    UE_LOG(LogTemp,Warning, TEXT("Servers Button Clicked"));
+    UE_LOG(LogTemp,Warning, TEXT("Find Sessions Button Clicked"));
     if (OwningHUD.IsValid())
     {
         OwningHUD->RemoveMenu();

@@ -23,7 +23,7 @@ void Construct(const FArguments& InArgs);
 
 FReply OnServer_1Clicked() const;
 FReply OnServer_2Clicked() const;
-FReply OnBackClicked() const;
+FReply OnServerBackClicked() const;
 
 /**The HUD that created this widget*/
 TWeakObjectPtr<class AMenuHUD> OwningHUD;

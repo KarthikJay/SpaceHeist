@@ -16,7 +16,7 @@ void SServerMenuWidget::Construct(const FArguments& InArgs)
     const FMargin ButtonPadding = FMargin(10.f); //provides margins buttons such that buttons don't touch each other
 
     const FText TitleText = LOCTEXT("GameTitle", "Space Heist");
-    const FText ServersText = LOCTEXT("Servers", "Servers");
+    const FText SessionsText = LOCTEXT("Sessions", "Sessions");
     const FText Server1Text = LOCTEXT("Server 1", "Server 1");
     const FText Server2Text = LOCTEXT("Server 2", "Server 2");
     const FText BackText = LOCTEXT("Back", "Back");
@@ -54,12 +54,12 @@ void SServerMenuWidget::Construct(const FArguments& InArgs)
 
                 ]
 
-                //Servers Text
+                //Sessions Text
                 + SVerticalBox::Slot()
                 [
                     SNew(STextBlock)
                     .Font(TitleTextStyle)
-                    .Text(ServersText)
+                    .Text(SessionsText)
                     .Justification(ETextJustify::Center)
 
                 ]
@@ -97,7 +97,7 @@ void SServerMenuWidget::Construct(const FArguments& InArgs)
                 .Padding(ButtonPadding)
                 [
                     SNew(SButton)
-                    //.OnClicked(this, &SMainMenuWidget::OnBackClicked)
+                    .OnClicked(this, &SServerMenuWidget::OnServerBackClicked)
                     [
                         SNew(STextBlock)
                         .Font(ButtonTextStyle)
@@ -108,4 +108,16 @@ void SServerMenuWidget::Construct(const FArguments& InArgs)
 
             ]
         ];
+}
+
+FReply SServerMenuWidget::OnServerBackClicked() const 
+{
+    UE_LOG(LogTemp,Warning, TEXT("Server Back Button Clicked"));
+    if (OwningHUD.IsValid())
+    {
+        OwningHUD->RemoveServerMenu();
+        OwningHUD->ShowMenu();
+    }
+    
+    return FReply::Handled();
 }

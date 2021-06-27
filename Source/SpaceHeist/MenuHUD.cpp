@@ -58,3 +58,17 @@ void AMenuHUD::ShowServerMenu()
         }
     }
 }
+
+void AMenuHUD::RemoveServerMenu() 
+{
+	if (GEngine && GEngine->GameViewport && ServerMenuWidgetContainer.IsValid())
+    {
+        GEngine->GameViewport->RemoveViewportWidgetContent(ServerMenuWidgetContainer.ToSharedRef());
+
+        if (PlayerOwner)
+        {
+            PlayerOwner->bShowMouseCursor = false;
+            PlayerOwner->SetInputMode(FInputModeGameOnly());
+        }
+    }
+}
