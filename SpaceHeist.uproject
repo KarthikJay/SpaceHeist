@@ -1,13 +1,33 @@
 {
 	"FileVersion": 3,
 	"EngineAssociation": "4.26",
-	"Category": "",
-	"Description": "",
+	"Category": "Game",
+	"Description": "An OSS 3D heist game set in space.",
+	"CreatedBy" : "Some Dudes",
+	"CreatedByURL" : "https://github.com/KarthikJay/SpaceHeist",
+	"SupportURL" : "https://github.com/KarthikJay/SpaceHeist/issues",
 	"Modules": [
 		{
 			"Name": "SpaceHeist",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OnlineSubsystemSteam",
+			"Enabled": true
+		},
+		{
+			"Name": "SteamShared",
+			"Enabled": true
+		},
+		{
+			"Name": "SteamSockets",
+			"Enabled": true
 		}
 	]
 }

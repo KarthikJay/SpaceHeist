@@ -7,12 +7,18 @@
 #include "MenuHUD.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
+UCLASS(config=Game)
 class SPACEHEIST_API AMenuHUD : public AHUD
 {
 	GENERATED_BODY()
+
+public:
+
+	void ShowMenu();
+	void RemoveMenu();
+	void ShowServerMenu();
 
 protected:
 
@@ -22,11 +28,4 @@ protected:
 	TSharedPtr<class SWidget> ServerMenuWidgetContainer;
 
 	virtual void BeginPlay() override;
-	
-public:
-
-	void ShowMenu();
-	void RemoveMenu();
-	void ShowServerMenu();
-	
 };

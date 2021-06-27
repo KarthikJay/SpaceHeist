@@ -2,14 +2,13 @@
 
 #include "SMainMenuWidget.h"
 #include "MenuHUD.h"
-#include "GameFramework/PlayerController.h"
 
 #define LOCTEXT_NAMESPACE "MainMenu"
 
 void SMainMenuWidget::Construct(const FArguments& InArgs)
 {
     bCanSupportFocus = true;
-    
+
     OwningHUD = InArgs._OwningHUD;
 
     const FMargin ContentPadding = FMargin(500.f, 300.f); //The most obvious margins to make the buttons and title not span the entire screen
@@ -65,8 +64,8 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
                         .Font(ButtonTextStyle)
                         .Text(PlayText)
                         .Justification(ETextJustify::Center)
-                    ]                   
-                ]    
+                    ]
+                ]
 
                 //Settings Button
                 + SVerticalBox::Slot()
@@ -78,7 +77,7 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
                         .Font(ButtonTextStyle)
                         .Text(SettingsText)
                         .Justification(ETextJustify::Center)
-                    ]                   
+                    ]
                 ]
 
                 //Servers Button
@@ -92,7 +91,7 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
                         .Font(ButtonTextStyle)
                         .Text(ServersText)
                         .Justification(ETextJustify::Center)
-                    ]                   
+                    ]
                 ]
 
                 //Quit Button
@@ -106,25 +105,25 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
                         .Font(ButtonTextStyle)
                         .Text(QuitText)
                         .Justification(ETextJustify::Center)
-                    ]                   
+                    ]
                 ]
 
             ]
         ];
 }
 
-FReply SMainMenuWidget::OnPlayClicked() const 
+FReply SMainMenuWidget::OnPlayClicked() const
 {
     UE_LOG(LogTemp,Warning, TEXT("Play Button Clicked"));
     if (OwningHUD.IsValid())
     {
         OwningHUD->RemoveMenu();
     }
-    
+
     return FReply::Handled();
 }
 
-FReply SMainMenuWidget::OnQuitClicked() const 
+FReply SMainMenuWidget::OnQuitClicked() const
 {
     UE_LOG(LogTemp,Warning, TEXT("Quit Button Clicked"));
     if(OwningHUD.IsValid())
@@ -138,7 +137,7 @@ FReply SMainMenuWidget::OnQuitClicked() const
     return FReply::Handled();
 }
 
-FReply SMainMenuWidget::OnServersClicked() const 
+FReply SMainMenuWidget::OnServersClicked() const
 {
     UE_LOG(LogTemp,Warning, TEXT("Servers Button Clicked"));
     if (OwningHUD.IsValid())
@@ -146,10 +145,8 @@ FReply SMainMenuWidget::OnServersClicked() const
         OwningHUD->RemoveMenu();
         OwningHUD->ShowServerMenu();
     }
-    
+
     return FReply::Handled();
 }
 
 #undef LOCTEXT_NAMESPACE
-
-

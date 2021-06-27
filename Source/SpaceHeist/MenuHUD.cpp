@@ -7,15 +7,16 @@
 #include "Widgets/SWeakWidget.h"
 #include "Engine/Engine.h"
 #include "GameFramework/PlayerController.h"
-#include <string>
+#include "SpaceHeistGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 void AMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
     ShowMenu();
-    
+
 }
-void AMenuHUD::ShowMenu() 
+void AMenuHUD::ShowMenu()
 {
     if(GEngine && GEngine->GameViewport)
     {
@@ -30,7 +31,7 @@ void AMenuHUD::ShowMenu()
     }
 }
 
-void AMenuHUD::RemoveMenu() 
+void AMenuHUD::RemoveMenu()
 {
 	if (GEngine && GEngine->GameViewport && MenuWidgetContainer.IsValid())
     {
@@ -40,6 +41,8 @@ void AMenuHUD::RemoveMenu()
         {
             PlayerOwner->bShowMouseCursor = false;
             PlayerOwner->SetInputMode(FInputModeGameOnly());
+
+            Cast<USpaceHeistGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->HostSession(GEngine->GetFirstGamePlayer(GetWorld())->GetPreferredUniqueNetId().GetUniqueNetId(), FName(TEXT("TestSession")), true, 5);
         }
     }
 }

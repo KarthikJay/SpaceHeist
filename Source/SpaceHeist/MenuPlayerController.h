@@ -7,13 +7,13 @@
 #include "MenuPlayerController.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
+UCLASS(config=Game)
 class SPACEHEIST_API AMenuPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 protected:
 
 	AMenuPlayerController();

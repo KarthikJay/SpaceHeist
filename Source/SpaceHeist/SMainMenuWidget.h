@@ -6,7 +6,7 @@
 #include "SlateExtras.h"
 
 /**
- * 
+ *
  */
 class SMainMenuWidget : public SCompoundWidget
 {
